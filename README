@@ -1,0 +1,130 @@
+Name: YongQuan Zhang, Shufen Situ
+ID #: 1515873, 1571076
+CMPUT 274 Fa19
+
+Assignment 2: Encrypted Arduino Communication part 2
+
+
+Included Files:
+
+	- encrypted_communication_part2.cpp: Contains the 22 functions:
+setup(),
+
+uint32_to_serial3(uint32_t num),
+
+unsigned int upper_sqrt(unsigned int n),
+
+uint32_from_serial3(),
+
+mulmod(uint32_t x, uint32_t b, uint32_t m),
+
+powmod(uint32_t x, uint32_t pow, uint32_t m),
+
+Encryption(uint32_t we_read, uint32_t e, uint32_t m),
+
+Decryption(uint32_t num, uint32_t d, uint32_t n),
+
+uint32_t gcd_euclid_fast(uint32_t a, uint32_t b),
+
+bool randombit(),
+
+uint16_t generate_k(int k),
+
+bool primetest(uint32_t k),
+
+uint32_t reduce_mod(d, phi_num).
+
+uint32_t generate_e(),
+
+uint32_t generate_d(uint32_t e, uint32_t phi_num),
+
+bool  wait_on_serial3( uint8_t  nbytes , long  timeout ),
+
+enum ClientState,
+
+enum ServerState,
+
+bool client_action(uint8_t CR, uint8_t ACK,uint32_t ckey, uint32_t cmod, uint32_t &skey, uint32_t &smod ),
+
+bool server_action(uint8_t CR, uint8_t ACK, uint32_t skey, uint32_t smod, uint32_t& ckey, uint32_t& cmod),
+
+void Generate_keys_for_server_and_client(uint32_t &p, uint32_t &q, uint32_t &n, uint32_t &phi_num, uint32_t &local_e, uint32_t &d),
+
+int main().
+
+	- Makefile
+
+	- README
+
+Accessorise:
+	* 2 Arduino Mega Board(AMG)(Arduino 1 and Arduino 2)
+	* Breadboard
+	* 7 wires
+	* USB cable
+
+Wiring instructions:
+	Arduino 1's TX3 <--> Arduino 2's RX3, Arduino 1's RX3 <--> Arduino 2's TX3.
+	Arduino 1's Pin 13 <--> "+" on breadboard, Arduino 2's Pin 13 <--> "-" on breadboard.
+	Arduino 1's Pin 5v <--> "+" on breadboard, Arduino 2's GND <--> "-" on breadboard to create
+	"HIGH" or "LOW" for pin 13.
+	Arduino 1's Pin GND <--> Arduino 2's Pin GND.
+
+
+Running the code:
+You should put encrypted_communication_part2.cpp into a file that contains
+- Makefile
+1. Connect Arduino Mega Boards and other necessary parts of this exercise.
+
+2. Connect Arduino 1 and Arduino 2 with different lab-top or computers.
+
+3. Go to the terminal and type "make", then "make upload" to upload the made file to Arduino Mega Board.
+Then press the valid key and check display of serial monitor. ( You will need to upload the encrypted_communication_part2.cpp file to both of the arduino.)
+
+Notes and Assumptions:
+	encrypted_communication_part2.cpp: Contains the 21 functions:
+
+setup() doesn't have argument and return nothing(None).
+
+uint32_to_serial3(uint32_t num) is used to write encrypted message to serial3.
+
+uint32_from_serial3() is used to read the received encrypted message from serial3.
+
+unsigned int upper_sqrt(unsigned int n) is used to calculate square root without using built in function.
+
+mulmod(uint32_t x, uint32_t b, uint32_t m) is a function to do multiplication without overflow.
+
+powmod(uint32_t x, uint32_t pow, uint32_t m) is used to represent exponential function and we used mulmod function in it so it won't overflow.
+
+Encryption(uint32_t we_read, uint32_t e, uint32_t m) is used to encrypted messages.
+
+Decryption(uint32_t num, uint32_t d, uint32_t n) is used to decrypted messages.
+
+uint32_t gcd_euclid_fast(uint32_t a, uint32_t b) is a function that represent gcd(a,b).
+
+bool randombit() is a function to read the voltage on pin A1 and generate the least significaqnt bit.
+
+uint16_t generate_k(int k) is a function that use randombit() function to generate a true random number
+between 2^k and 2^k+1.
+
+bool primetest(uint32_t k) is the function to test if a number is a prime or not. If return a true that
+means primetest failed.
+
+uint32_t reduce_mod(d, phi_num) will correct the invalid d value.
+
+uint32_t generate_e() is a function that could use randombit() function to generate a true random function between 1 and phi(generated phi). Notice, I combined the reduce_mod function that metioned in the work sheet with this function.
+
+uint32_t generate_d(uint32_t e, uint32_t phi_num) is a function to generate d value so that e*d = 1 mod phi.
+
+bool  wait_on_serial3( uint8_t  nbytes , long  timeout ) is a function that provided by the instructor and it could be used for the timeout transition.
+
+enum ClientState is a function(or statement) that could be used to determine the states for Client.
+
+enum ServerState is a function(or statement) that could be used to determine the states for Server.
+
+bool client_action(uint8_t CR, uint8_t ACK,uint32_t ckey, uint32_t cmod, uint32_t &skey, uint32_t &smod ) is a function could be used to do client handshake.
+
+bool server_action(uint8_t CR, uint8_t ACK, uint32_t skey, uint32_t smod, uint32_t& ckey, uint32_t& cmod) is a function could be used to do server handshake.
+
+void Generate_keys_for_server_and_client(uint32_t &p, uint32_t &q, uint32_t &n, uint32_t &phi_num, uint32_t &local_e, uint32_t &d) is a function that will generate all necessary keys and modulus then return them by using reference.
+
+main() is needed to excute other functions.
